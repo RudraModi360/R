@@ -9,5 +9,9 @@ app = Ursina()
 window.color = color.black10
 
 bg = Entity(model='quad',texture='bg2.png',scale=(18,5,1))
+camera.orthographic = True
+camera.fov = 20
+ground = Entity(model='cube', texture='gr1.png',scale=(40,3,1), collider='box', ignore=True)
+
 
 app.run()
