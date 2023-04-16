@@ -7,7 +7,6 @@ app = Ursina()
 
 from ursina.prefabs.platformer_controller_2d import PlatformerController2d
 
-# t=time.time()
 player = PlatformerController2d(
     walk_speed=100,
     x=50,
@@ -21,7 +20,6 @@ player = PlatformerController2d(
 )
 window = WindowPanel(
     title="GAME OVER!!",
-    # content="This is a pop-up window!",
     scale=(0.9, 0.6),
     draggable=False,
     visible=False,
@@ -34,6 +32,17 @@ player1 = WindowPanel(
     scale=(0.6, 0.04),
     position=(-0.85, 0.5),
 )
+def code():
+    b=Animation('code.gif')
+    b.scale=(40,40)
+    b.position=(723, 536)
+def health():
+    a=Animation('hp.gif')
+    a.scale=(70,70)
+    a.position=(409, 212)
+    if player.position==(409, 212):
+        heal(75)
+
 
 HB1 = HealthBar(
     bar_color=color.lime.tint(-0.25),
@@ -42,21 +51,18 @@ HB1 = HealthBar(
     scale=(1.2, 0.04),
     position=(-0.8, 0.5),
 )
-
+        
 
 def acid():
     distance = Vec2(player.x, player.y) - Vec2(1688, 201)
     dis = Vec2(player.x, player.y) - Vec2(571, 129)
-    if distance.length() < 30:
+    if distance.length() < 20:
         damage(5)
-    if dis.length() < 80:
+    if dis.length() < 50:
         damage(5)
 
-def damage():
-    HB1.value -= 1
-
-# invoke(damage, delay=1, repeat=True)
-
+def damage(power):
+    HB1.value -= power
 
 def heal(power):
     HB1.value += power
@@ -127,6 +133,8 @@ enemy = Entity(model="cube", collider="box", color=color.red, position=(16, 5, -
 
 def update():
     acid()
+    code()
+    health()
     if player.intersects(enemy).hit:
         print("die")
         sleep(1)
